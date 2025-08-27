@@ -1,0 +1,19 @@
+---
+name: Feature request
+about: Stel een verbetering/feature voor
+title: "[Feature] Korte titel"
+labels: enhancement
+assignees: ''
+---
+
+**Probleem/Use case**
+Welke behoefte lost deze feature op?
+
+**Voorstel**
+Beschrijf de oplossing/aanpak.
+
+**Alternatieven**
+Welke alternatieven heb je overwogen?
+
+**Impact**
+Welke impact op les/opdrachten? (documentatie, voorbeelden, etc.)

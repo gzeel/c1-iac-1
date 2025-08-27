@@ -1,0 +1,26 @@
+---
+name: Bug report
+about: Meld een fout of probleem
+title: "[Bug] Korte titel"
+labels: bug
+assignees: ''
+---
+
+**Beschrijving**
+Wat is het probleem?
+
+**Om te reproduceren**
+Stappen:
+1. ...
+2. ...
+
+**Verwachting**
+Wat verwachtte je dat er zou gebeuren?
+
+**Logs / Output**
+Plak relevante foutmeldingen of logs.
+
+**Context**
+- OS:
+- Ansible-versie:
+- Overige info:
