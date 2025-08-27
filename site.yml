@@ -1,0 +1,59 @@
+---
+- name: Configure web + mysql (declarative desired state)
+  hosts: all
+  become: yes
+  vars:
+    mysql_root_password: "SecurePassword123!"
+    doc_root: "/var/www/html/app"
+    page_title: "Hello IaC World (Ansible)"
+  tasks:
+    - name: Ensure apt cache is updated
+      apt:
+        update_cache: yes
+
+    - name: Ensure packages are present
+      apt:
+        name:
+          - apache2
+          - mysql-server
+          - python3-pymysql
+        state: present
+
+    - name: Ensure document root exists
+      file:
+        path: "{{ doc_root }}"
+        state: directory
+        mode: "0755"
+
+    - name: Deploy Apache vhost from template
+      template:
+        src: templates/apache-site.conf.j2
+        dest: /etc/apache2/sites-available/000-default.conf
+      notify: restart apache
+
+    - name: Place simple index page
+      copy:
+        dest: "{{ doc_root }}/index.html"
+        content: "<h1>{{ page_title }}</h1>\n"
+
+    - name: Ensure services are running and enabled
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - apache2
+        - mysql
+
+    - name: Remove anonymous MySQL users (idempotent)
+      mysql_user:
+        name: ""
+        host_all: true
+        state: absent
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  handlers:
+    - name: restart apache
+      systemd:
+        name: apache2
+        state: restarted
